@@ -35,7 +35,7 @@ This script combines 3 functions to generate compatible animation assets. There 
 
 Key improvement: Static model adds a wrapper root prim to ensure animation timesamples always override default values regardless of reference order.
 
-At the top of the script you will find the three functions and flags to set up your desired behavior.  The script will execute any combination of these three options. Replace `True` with `False` to de-activate a feature.
+At the top of the script you will find the three functions and flags to set up your desired behavior.  The script will execute any combination of these three options. Replace `True` with `False` to deactivate a feature.
 
 ```
 # ============================================
