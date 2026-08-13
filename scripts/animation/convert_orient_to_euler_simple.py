@@ -140,28 +140,26 @@ def choose_best_euler_order(quat, threshold=85.0):
     Returns:
         tuple: (euler_angles, order_used)
     """
-    # Try different Euler orders
     orders = [
-        ("XYZ", quaternion_to_euler_xyz),
+        ("XYZ", quaternion_to_euler_xyz),  # default fallback
         ("XZY", quaternion_to_euler_xzy),
         ("YXZ", quaternion_to_euler_yxz),
         ("ZXY", quaternion_to_euler_zxy),
     ]
 
-    results = []
-    for order_name, converter in orders:
-        euler = converter(quat)
-        has_gimbal = detect_gimbal_lock(euler, order_name, threshold)
-        results.append((euler, order_name, has_gimbal))
+    # Compute XYZ once as both the first candidate and the default fallback.
+    euler_xyz = quaternion_to_euler_xyz(quat)
+    if not detect_gimbal_lock(euler_xyz, "XYZ", threshold):
+        return euler_xyz, "XYZ"
 
-    # First, try to find an order without gimbal lock
-    for euler, order_name, has_gimbal in results:
-        if not has_gimbal:
+    # Return the first remaining Euler order that is free of gimbal lock.
+    for order_name, converter in orders[1:]:
+        euler = converter(quat)
+        if not detect_gimbal_lock(euler, order_name, threshold):
             return euler, order_name
 
-    # If all have gimbal lock, return the default XYZ
-    # (In practice, if one has gimbal lock, usually at least one other order won't)
-    return results[0][0], results[0][1]
+    # If every order has gimbal lock, fall back to the already-computed XYZ.
+    return euler_xyz, "XYZ"
 
 
 def fix_quaternion_flips(time_samples, orient_attr):
