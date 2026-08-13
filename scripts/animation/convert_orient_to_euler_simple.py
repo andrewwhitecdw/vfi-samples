@@ -75,8 +75,8 @@ def quaternion_to_euler_yxz(quat):
     rotation = Gf.Rotation(quat)
     # For YXZ order, we decompose as ZXY
     angles = rotation.Decompose(Gf.Vec3d.ZAxis(), Gf.Vec3d.XAxis(), Gf.Vec3d.YAxis())
-    # Return still as Vec3d(x, y, z) for consistency
-    return Gf.Vec3d(angles[1], angles[2], angles[0])
+    # Return in YXZ order as Vec3d(rotateY, rotateX, rotateZ)
+    return Gf.Vec3d(angles[2], angles[1], angles[0])
 
 
 def quaternion_to_euler_zxy(quat):
@@ -116,7 +116,7 @@ def detect_gimbal_lock(euler_angles, order="XYZ", threshold=85.0):
     elif order == "XZY":
         middle_rotation = abs(euler_angles[2])  # Z is middle
     elif order == "YXZ":
-        middle_rotation = abs(euler_angles[0])  # X is middle
+        middle_rotation = abs(euler_angles[1])  # X is middle in YXZ Vec3d
     elif order == "ZXY":
         middle_rotation = abs(euler_angles[0])  # X is middle
     else:
