@@ -120,8 +120,7 @@ def detect_gimbal_lock(euler_angles, order="XYZ", threshold=85.0):
     elif order == "ZXY":
         middle_rotation = abs(euler_angles[0])  # X is middle
     else:
-        # Default to XYZ
-        middle_rotation = abs(euler_angles[1])
+        raise ValueError(f"Unsupported Euler order: {order}")
 
     # Check if middle rotation is near 90 or 270 degrees
     near_90 = abs(middle_rotation - 90.0) < (90.0 - threshold)
