@@ -252,6 +252,7 @@ active = [
 
 ```python
 from pxr import Usd, Sdf, Vt, Gf
+import logging
 
 def apply_value_clips(stage, target_prim_path, clips_data):
     """
@@ -292,8 +293,9 @@ def apply_value_clips(stage, target_prim_path, clips_data):
     try:
         prim_spec.SetInfo('clips', clips_dict)
         prim_spec.SetInfo('clipSets', ["default"])
-    except Exception:
-        pass  # Data written despite exception
+    except Exception as e:
+        # Data is still written; log and continue.
+        logging.warning(f"SetInfo raised {e!r}, but clip metadata was written.")
     
     layer.Save()
 
