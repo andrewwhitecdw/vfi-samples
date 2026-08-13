@@ -6,7 +6,7 @@ This workflow serves as a guide to creating a scalable animation pipeline that e
 
 As not all exporters and connectors will export value clips, we have provided some sample scripts that will assist in generating Animation clip data.
 
- Benefits of TimeSampled animation (value) clips include:
+Benefits of TimeSampled animation (value) clips include:
 
 * Lighter weight stages
 * Separation of animation data and model assets
