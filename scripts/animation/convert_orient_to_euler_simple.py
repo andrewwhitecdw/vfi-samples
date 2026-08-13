@@ -123,10 +123,12 @@ def detect_gimbal_lock(euler_angles, order="XYZ", threshold=85.0):
         # Default to XYZ
         middle_rotation = abs(euler_angles[1])
 
-    # Check if middle rotation is near 90 or 270 degrees
-    near_90 = abs(middle_rotation - 90.0) < (90.0 - threshold)
-    near_270 = abs(middle_rotation - 270.0) < (90.0 - threshold)
-    return near_90 or near_270
+    # Clamp threshold so the tolerance is never negative.
+    threshold = max(0.0, min(90.0, threshold))
+
+    # middle_rotation is already absolute and Gf.Rotation.Decompose returns
+    # angles in [-180, 180], so only 90 degrees (i.e. ±90) can be gimbal lock.
+    return abs(middle_rotation - 90.0) < (90.0 - threshold)
 
 
 def choose_best_euler_order(quat, threshold=85.0):
