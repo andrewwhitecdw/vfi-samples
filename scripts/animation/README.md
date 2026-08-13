@@ -108,6 +108,6 @@ The data has now been converted to Eulers.
 
 ### Value Clip Sequencing (`value_clip_sequencer.py`)
 
-For value clip sequencing, please refer to the [Value Clip Sequencer Guide](scripts/animation/VALUE_CLIP_SEQUENCER_GUIDE.md).
-For a more detailed developer guide for usd value clips, please refer to the [Value Clips Developer Guide](scripts/animation/VALUE_CLIPS_DEVELOPER_GUIDE.md).
+For value clip sequencing, please refer to the [Value Clip Sequencer Guide](VALUE_CLIP_SEQUENCER_GUIDE.md).
+For a more detailed developer guide for usd value clips, please refer to the [Value Clips Developer Guide](VALUE_CLIPS_DEVELOPER_GUIDE.md).
 
