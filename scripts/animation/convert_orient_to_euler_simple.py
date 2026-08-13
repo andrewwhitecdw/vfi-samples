@@ -284,17 +284,18 @@ def convert_orient_to_rotateXYZ(prim, stage):
             if not xformable:
                 return False
 
-            rotate_xyz_op = xformable.AddRotateXYZOp()
-            rotate_xyz_op.Set(euler_angles)
+            with Sdf.ChangeBlock():
+                rotate_xyz_op = xformable.AddRotateXYZOp()
+                rotate_xyz_op.Set(euler_angles)
 
-            # Clear orient and update xform ops
-            orient_attr.Clear()
-            xform_ops = xformable.GetOrderedXformOps()
-            new_ops = [
-                rotate_xyz_op if op.GetOpType() == UsdGeom.XformOp.TypeOrient else op
-                for op in xform_ops
-            ]
-            xformable.SetXformOpOrder(new_ops)
+                # Clear orient and update xform ops
+                orient_attr.Clear()
+                xform_ops = xformable.GetOrderedXformOps()
+                new_ops = [
+                    rotate_xyz_op if op.GetOpType() == UsdGeom.XformOp.TypeOrient else op
+                    for op in xform_ops
+                ]
+                xformable.SetXformOpOrder(new_ops)
             return True
         return False
 
