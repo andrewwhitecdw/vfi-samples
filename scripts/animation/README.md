@@ -95,13 +95,12 @@ The default rotation values for usd are written as quaternions. In cases where t
 
 To use:
 
-1. Select the prim that contains the hierarchy of timeSample animation and execute the script.
-2. Copy the script to a location on your hard drive.
-3. Open the script editor in Omniverse USD Composer.
-4. Select the prim containing the quaternion timesample data.
-5. Enter the following command (adapt this path for the location of the script):
+1. Copy the script to a location on your hard drive.
+2. Open the script editor in Omniverse USD Composer.
+3. Select the prim that contains the hierarchy of timeSample animation / quaternion timesample data.
+4. Enter the following command (adapt this path for the location of the script):
     `exec(open(r'{repo_root}/scripts/animation/convert_orient_to_euler_simple.py').read())`
-6. Click `Run`.
+5. Click `Run`.
 
 The data has now been converted to Eulers.
 
