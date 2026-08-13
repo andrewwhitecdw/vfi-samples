@@ -190,9 +190,7 @@ def fix_quaternion_flips(time_samples, orient_attr):
         # Check dot product to see if quaternions are in opposite hemispheres
         dot = (
             prev_quat.GetReal() * curr_quat.GetReal()
-            + prev_quat.GetImaginary()[0] * curr_quat.GetImaginary()[0]
-            + prev_quat.GetImaginary()[1] * curr_quat.GetImaginary()[1]
-            + prev_quat.GetImaginary()[2] * curr_quat.GetImaginary()[2]
+            + Gf.Dot(prev_quat.GetImaginary(), curr_quat.GetImaginary())
         )
 
         # If dot product is negative, flip the quaternion to ensure shortest path
