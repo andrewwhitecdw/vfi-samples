@@ -58,7 +58,7 @@ def quaternion_to_euler_xzy(quat):
     # For XZY order, we decompose as YZX
     angles = rotation.Decompose(Gf.Vec3d.YAxis(), Gf.Vec3d.ZAxis(), Gf.Vec3d.XAxis())
     # Return in XZY order but still as Vec3d(x, y, z) for consistency
-    return Gf.Vec3d(angles[2], angles[0], angles[1])
+    return Gf.Vec3d(angles[2], angles[1], angles[0])
 
 
 def quaternion_to_euler_yxz(quat):
