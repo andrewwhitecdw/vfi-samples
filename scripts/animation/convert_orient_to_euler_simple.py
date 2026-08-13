@@ -274,7 +274,8 @@ def convert_orient_to_rotateXYZ(prim, stage):
     if not time_samples:
         # Check for default value
         default_value = orient_attr.Get()
-        if default_value:
+        # Gf.Quat* is falsy when zero, so explicitly test for None.
+        if default_value is not None:
             carb.log_info(f"Converting static orient for prim: {prim.GetPath()}")
             # Handle static value
             euler_angles = quaternion_to_euler_xyz(default_value)
