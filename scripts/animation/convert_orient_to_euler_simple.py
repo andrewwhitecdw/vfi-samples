@@ -111,17 +111,14 @@ def detect_gimbal_lock(euler_angles, order="XYZ", threshold=85.0):
         bool: True if near gimbal lock
     """
     # Determine which axis is the middle rotation based on order
-    if order == "XYZ":
-        middle_rotation = abs(euler_angles[1])  # Y is middle
-    elif order == "XZY":
+    # Default to XYZ (Y is middle)
+    middle_rotation = abs(euler_angles[1])
+    if order == "XZY":
         middle_rotation = abs(euler_angles[2])  # Z is middle
     elif order == "YXZ":
         middle_rotation = abs(euler_angles[0])  # X is middle
     elif order == "ZXY":
         middle_rotation = abs(euler_angles[0])  # X is middle
-    else:
-        # Default to XYZ
-        middle_rotation = abs(euler_angles[1])
 
     # Check if middle rotation is near 90 or 270 degrees
     near_90 = abs(middle_rotation - 90.0) < (90.0 - threshold)
