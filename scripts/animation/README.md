@@ -61,7 +61,7 @@ To use:
 
 1. Copy the script to a desired accessible location.
 2. Open the script editor in Omniverse USD Composer.
-4. Enter the following command (adapt this path for the location of the script):
+3. Enter the following command (adapt this path for the location of the script):
     `exec(open(r'{repo_root}/scripts/animation/usd_anim_asset_extractor.py').read())`
 
 > **Note:** In versions prior to kit 109, a bug exists with FSD that prevents the animation from playing upon initial loading. Saving and reloading the file will allow the Animation to Play.
