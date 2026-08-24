@@ -284,16 +284,32 @@ def convert_orient_to_rotateXYZ(prim, stage):
             if not xformable:
                 return False
 
-            rotate_xyz_op = xformable.AddRotateXYZOp()
+            # Snapshot the xform op order before adding a new rotateXYZ op
+            xform_ops = xformable.GetOrderedXformOps()
+
+            # Reuse an existing rotateXYZ op if present to avoid duplicates
+            rotate_xyz_op = None
+            for op in xform_ops:
+                if op.GetOpType() == UsdGeom.XformOp.TypeRotateXYZ:
+                    rotate_xyz_op = op
+                    break
+
+            if not rotate_xyz_op:
+                rotate_xyz_op = xformable.AddRotateXYZOp()
+
             rotate_xyz_op.Set(euler_angles)
 
             # Clear orient and update xform ops
             orient_attr.Clear()
-            xform_ops = xformable.GetOrderedXformOps()
-            new_ops = [
-                rotate_xyz_op if op.GetOpType() == UsdGeom.XformOp.TypeOrient else op
-                for op in xform_ops
-            ]
+            new_ops = []
+            for op in xform_ops:
+                if op.GetOpType() == UsdGeom.XformOp.TypeOrient:
+                    # rotateXYZ is already in the op order if reused;
+                    # if newly added, insert it where orient was
+                    if rotate_xyz_op not in xform_ops:
+                        new_ops.append(rotate_xyz_op)
+                else:
+                    new_ops.append(op)
             xformable.SetXformOpOrder(new_ops)
             return True
         return False
